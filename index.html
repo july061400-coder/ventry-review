@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f2137">
+  <meta name="description" content="VENTRY 자판기 설치·운영관리 홈페이지 1차 디자인 시안">
+  <title>VENTRY | 설치부터 운영관리까지</title>
+  <link rel="icon" type="image/jpeg" href="ventry-logo-navy.jpeg">
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+    :root{--navy:#0f2137;--ink:#14273c;--blue:#38bdf8;--muted:#62758b;--line:#dce5ec;--slate:#f8fafc;--white:#fff;--max:1220px}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;color:var(--ink);font-family:Pretendard,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:var(--white);-webkit-font-smoothing:antialiased}
+    button,a{font:inherit}
+    a{text-decoration:none;color:inherit}
+    button{cursor:pointer}
+    img{max-width:100%;display:block}
+    :focus-visible{outline:3px solid var(--blue);outline-offset:4px}
+    .container{width:min(calc(100% - 64px),var(--max));margin-inline:auto}
+    .eyebrow{margin:0 0 20px;font-size:13px;font-weight:800;letter-spacing:.19em;color:#167da8}
+    .eyebrow.light{color:#8fdcf7}
+    .section-title{margin:0;color:var(--navy);font-size:clamp(30px,3.3vw,47px);line-height:1.25;letter-spacing:-.055em;font-weight:750}
+    .section-sub{margin:21px 0 0;font-size:18px;line-height:1.7;color:var(--muted)}
+    .site-header{position:sticky;z-index:50;top:0;background:rgba(255,255,255,.95);border-bottom:1px solid rgba(15,33,55,.08);backdrop-filter:blur(18px)}
+    .header-inner{height:78px;display:flex;align-items:center;gap:38px}
+    .brand{display:inline-flex;align-items:center;gap:8px;flex:none;color:var(--navy)}
+    .brand-mark,.brand-wordmark{position:relative;display:block;overflow:hidden;background:#fff;flex:none}
+    .brand-mark{width:46px;height:46px}
+    .brand-mark img{position:absolute;max-width:none;width:116px;height:116px;left:-32px;top:-27px;mix-blend-mode:multiply;filter:contrast(1.18)}
+    .brand-wordmark{width:143px;height:36px}
+    .brand-wordmark img{position:absolute;max-width:none;width:276px;height:276px;left:-59px;top:-181px;mix-blend-mode:multiply;filter:contrast(1.18)}
+    .desktop-nav{display:flex;align-items:center;gap:31px;margin-left:auto;color:#4a6074;font-size:15px;font-weight:650}
+    .desktop-nav a{transition:color .2s}
+    .desktop-nav a:hover{color:#0a7eaf}
+    .header-cta{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;background:var(--navy);color:#fff;border-radius:7px;font-size:14px;font-weight:750;white-space:nowrap;transition:background .2s,transform .2s}
+    .header-cta:hover,.button-primary:hover{background:#174268;transform:translateY(-2px)}
+    .menu-toggle{display:none;width:44px;height:44px;margin-left:auto;border:1px solid var(--line);background:#fff;border-radius:8px;align-items:center;justify-content:center;flex-direction:column;gap:5px}
+    .menu-toggle span{width:19px;height:2px;background:var(--navy);border-radius:2px}
+    .mobile-nav{display:none}
+    .hero{overflow:hidden;background:linear-gradient(180deg,#fff 0%,#f8fbfd 100%);border-bottom:1px solid var(--line)}
+    .hero-inner{min-height:690px;display:grid;grid-template-columns:1.06fr .94fr;align-items:center;gap:72px;padding-block:96px 110px}
+    .hero-copy{max-width:650px;position:relative;z-index:1}
+    .hero h1{margin:0;color:var(--navy);font-size:clamp(52px,4.8vw,68px);font-weight:800;line-height:1.12;letter-spacing:-.075em;word-break:keep-all}
+    .hero h1 em{font-style:normal;color:#1585b6}
+    .hero-description{max-width:590px;margin:27px 0 0;color:#53697e;font-size:18px;line-height:1.75;word-break:keep-all}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+    .button{min-height:52px;padding:0 25px;display:inline-flex;align-items:center;justify-content:center;gap:16px;border-radius:7px;font-size:15px;font-weight:750;transition:transform .2s,background .2s,border-color .2s}
+    .button-primary{background:var(--navy);color:#fff}
+    .button-secondary{border:1px solid #b8c9d5;background:#fff;color:var(--navy)}
+    .button-secondary:hover{border-color:#438bb0;transform:translateY(-2px)}
+    .button svg{width:16px;height:16px;flex:none}
+    .hero-footnote{display:flex;align-items:center;gap:12px;margin-top:64px;color:#688095;font-size:13px;font-weight:650;letter-spacing:.04em}
+    .hero-footnote:before{content:"";width:30px;height:1px;background:#87a4b8}
+    .visual{position:relative;min-width:0;height:520px;overflow:hidden;border-radius:18px;background:#0f2137;box-shadow:0 28px 65px rgba(15,33,55,.15)}
+    .visual:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(151,190,211,.075) 1px,transparent 1px),linear-gradient(90deg,rgba(151,190,211,.075) 1px,transparent 1px);background-size:38px 38px;mask-image:linear-gradient(to bottom,black 50%,transparent)}
+    .visual:after{content:"";position:absolute;width:330px;height:330px;right:-130px;top:-110px;border:1px solid rgba(131,211,244,.2);border-radius:50%;box-shadow:0 0 0 70px rgba(131,211,244,.025),0 0 0 140px rgba(131,211,244,.015)}
+    .visual-top{position:absolute;z-index:2;top:30px;left:32px;right:32px;display:flex;align-items:center;justify-content:space-between;color:#afd0df;font-size:12px;font-weight:750;letter-spacing:.16em}
+    .visual-top .signal{display:flex;align-items:center;gap:7px;letter-spacing:0;color:#86cde8}
+    .signal:before{content:"";width:7px;height:7px;border-radius:50%;background:#65cef7;box-shadow:0 0 0 4px rgba(101,206,247,.12)}
+    .visual-core{position:absolute;z-index:2;inset:115px 48px 88px;display:grid;grid-template-columns:1fr 1fr;gap:12px;transform:rotate(-4deg)}
+    .visual-tile{border:1px solid rgba(146,198,221,.25);background:rgba(255,255,255,.045);border-radius:10px;padding:18px;display:flex;flex-direction:column;justify-content:space-between;color:#fff;min-width:0}
+    .visual-tile:nth-child(2){transform:translateY(24px)}
+    .visual-tile:nth-child(3){transform:translateY(-12px)}
+    .visual-tile:nth-child(4){transform:translateY(12px)}
+    .tile-num{color:#91b8ca;font-size:12px;letter-spacing:.14em;font-weight:700}
+    .tile-icon{position:relative;width:33px;height:33px;border:1px solid rgba(107,209,248,.75);border-radius:8px}
+    .tile-icon:before,.tile-icon:after{content:"";position:absolute;background:#76d0f0;border-radius:2px}
+    .tile-icon:before{width:14px;height:1px;left:9px;top:11px}.tile-icon:after{width:10px;height:1px;left:9px;top:18px}
+    .tile-label{font-size:17px;letter-spacing:.03em;font-weight:750}
+    .visual-bottom{position:absolute;z-index:2;bottom:29px;left:32px;right:32px;border-top:1px solid rgba(190,227,241,.2);padding-top:16px;display:flex;align-items:center;justify-content:space-between;color:#a4c5d5;font-size:12px;letter-spacing:.1em}
+    .visual-bottom span:last-child{color:#63c5ed}
+    .care,.spaces,.school,.process{padding-block:122px}
+    .section-heading{display:flex;align-items:end;justify-content:space-between;gap:50px;margin-bottom:49px}
+    .section-heading .section-sub{max-width:455px;margin:0}
+    .care-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .care-card{min-height:315px;border:1px solid var(--line);border-radius:16px;padding:34px 31px;display:flex;flex-direction:column;transition:border-color .2s,transform .2s}
+    .care-card:hover{border-color:#9ac9df;transform:translateY(-3px)}
+    .care-index{font-size:14px;font-weight:800;color:#168ebf;letter-spacing:.15em}
+    .care-line{height:1px;background:var(--line);margin:32px 0 auto}
+    .care-card h3{margin:25px 0 13px;color:var(--navy);font-size:25px;letter-spacing:-.04em}
+    .care-card p{margin:0;color:var(--muted);font-size:16px;line-height:1.65;word-break:keep-all}
+    .spaces{background:#f5f8fa}
+    .spaces-layout{display:grid;grid-template-columns:1fr 1.05fr;gap:60px;align-items:start}
+    .spaces-left .section-title{max-width:510px}
+    .spaces-left .section-sub{max-width:460px}
+    .space-picker{margin-top:45px;border-top:1px solid #cbd8e1}
+    .space-option{width:100%;min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px;border:0;border-bottom:1px solid #cbd8e1;background:transparent;color:#62788b;text-align:left;font-size:18px;font-weight:680;letter-spacing:-.02em;transition:color .2s,padding .2s}
+    .space-option:hover{color:var(--navy);padding-left:7px}
+    .space-option[aria-selected="true"]{color:var(--navy);font-weight:800}
+    .space-option .space-count{font-size:13px;letter-spacing:.1em;color:#80a3b6}
+    .space-option[aria-selected="true"] .space-count{color:#087ead}
+    .space-detail{min-height:514px;border-radius:16px;background:var(--navy);color:#fff;padding:45px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+    .space-detail:before{content:"";position:absolute;width:280px;height:280px;right:-80px;top:-100px;border:1px solid rgba(139,207,236,.2);border-radius:50%;box-shadow:0 0 0 54px rgba(139,207,236,.04),0 0 0 110px rgba(139,207,236,.02)}
+    .space-detail .detail-number{position:relative;font-size:14px;color:#88cdec;font-weight:750;letter-spacing:.18em}
+    .detail-graphic{position:relative;margin:auto 0 18px;width:100%;height:180px;border:1px solid rgba(125,190,220,.22);border-radius:12px;background:linear-gradient(135deg,rgba(66,150,190,.16),rgba(66,150,190,0) 65%);overflow:hidden}
+    .detail-graphic .graphic-bar{position:absolute;height:1px;background:rgba(143,207,236,.4);left:30px;right:30px}
+    .detail-graphic .graphic-bar:nth-child(1){top:43px}.detail-graphic .graphic-bar:nth-child(2){top:90px}.detail-graphic .graphic-bar:nth-child(3){top:137px}
+    .detail-graphic .graphic-dot{position:absolute;width:16px;height:16px;border-radius:50%;background:#74cdec;box-shadow:0 0 0 10px rgba(116,205,236,.1);top:82px;right:25%}
+    .detail-graphic span{position:absolute;left:30px;bottom:15px;color:#93c2d9;font-size:11px;letter-spacing:.15em}
+    .space-detail h3{position:relative;margin:0 0 14px;font-size:36px;letter-spacing:-.05em}
+    .space-detail p{position:relative;margin:0;max-width:470px;color:#c2d0db;font-size:17px;line-height:1.65;word-break:keep-all}
+    .school{background:#fff}
+    .school-intro{max-width:700px}
+    .school .section-sub{max-width:670px}
+    .category-chips{display:flex;gap:10px;flex-wrap:wrap;margin:40px 0 28px}
+    .chip{min-height:42px;padding:0 20px;border-radius:100px;border:1px solid #c8d6df;background:#fff;color:#5f7285;font-size:14px;font-weight:750;transition:.2s}
+    .chip:hover{border-color:#6caac8}.chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+    .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .product-card{border:1px solid var(--line);border-radius:15px;padding:16px;background:#fff}
+    .product-image{height:206px;border-radius:9px;background:repeating-linear-gradient(135deg,#f3f7f9 0 10px,#f7fafb 10px 20px);border:1px solid #edf2f5;display:flex;align-items:center;justify-content:center;color:#a3b5c1;font-size:13px;font-weight:650}
+    .product-info{padding:21px 7px 7px}
+    .product-category{font-size:12px;color:#6a9db7;font-weight:800;letter-spacing:.12em}
+    .product-info h3{margin:9px 0 18px;color:var(--navy);font-size:19px;letter-spacing:-.03em}
+    .product-fields{border-top:1px solid var(--line);margin:0;padding-top:14px}
+    .product-fields div{display:flex;justify-content:space-between;gap:16px;padding:7px 0;color:#61778b;font-size:14px}
+    .product-fields dt,.product-fields dd{margin:0}.product-fields dd{color:#8fa3b1}
+    .product-more{width:100%;height:43px;margin-top:15px;border:1px solid var(--line);border-radius:6px;background:#fff;color:#7890a1;font-size:14px;font-weight:700;cursor:default}
+    .school-note{margin:19px 0 0;color:#8496a5;font-size:13px;line-height:1.5}
+    .process{background:#f8fafc}
+    .process-list{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:55px}
+    .process-step{border-top:2px solid #bfd3df;padding-top:23px}
+    .process-step:first-child{border-top-color:#1589b9}
+    .process-step span{color:#168aba;font-size:13px;font-weight:850;letter-spacing:.16em}
+    .process-step h3{margin:24px 0 0;color:var(--navy);font-size:21px;letter-spacing:-.04em;line-height:1.4}
+    .closing{padding:112px 0;background:var(--navy);color:#fff}
+    .closing-inner{display:flex;align-items:end;justify-content:space-between;gap:40px}
+    .closing h2{margin:0;max-width:760px;font-size:clamp(34px,3.3vw,47px);line-height:1.3;letter-spacing:-.06em}
+    .closing-actions{display:flex;flex-direction:column;gap:11px;align-items:flex-start}
+    .button-light{background:#fff;color:var(--navy);white-space:nowrap;cursor:default}
+    .closing-note{color:#95b1c5;font-size:12px}
+    .site-footer{background:#0a1928;color:#a1b2c0;padding:29px 0}
+    .footer-inner{display:flex;justify-content:space-between;gap:24px;align-items:center;font-size:12px;line-height:1.5}
+    .footer-inner strong{font-size:19px;color:#fff;letter-spacing:.05em}
+    @media(max-width:1100px){.desktop-nav{gap:18px;font-size:14px}.header-inner{gap:21px}.hero-inner{gap:35px}.hero h1{font-size:54px}.space-detail{padding:35px}}
+    @media(max-width:960px){.desktop-nav,.header-cta{display:none}.menu-toggle{display:flex}.mobile-nav{display:block;max-height:0;overflow:hidden;transition:max-height .25s}.mobile-nav.open{max-height:300px;border-top:1px solid var(--line)}.mobile-nav a{display:block;padding:15px 32px;border-bottom:1px solid var(--line);font-size:15px;font-weight:700}.hero-inner{min-height:auto;grid-template-columns:1fr;padding-block:82px}.hero-copy{max-width:750px}.visual{height:430px}.section-heading{display:block}.section-heading .section-sub{margin-top:18px}.spaces-layout{grid-template-columns:1fr;gap:35px}.space-detail{min-height:430px}.product-grid{grid-template-columns:repeat(2,1fr)}.product-card:last-child{display:none}}
+    @media(max-width:650px){.container{width:min(calc(100% - 40px),var(--max))}.header-inner{height:66px}.brand{gap:6px}.brand-mark{width:39px;height:39px}.brand-mark img{width:100px;height:100px;left:-28px;top:-23px}.brand-wordmark{width:113px;height:30px}.brand-wordmark img{width:222px;height:222px;left:-47px;top:-146px}.hero-inner{padding-block:69px 74px;gap:49px}.eyebrow{font-size:11px;margin-bottom:17px}.hero h1{font-size:clamp(35px,9.6vw,42px);line-height:1.2;letter-spacing:-.068em}.hero-description{font-size:16px;line-height:1.68;margin-top:22px}.hero-actions{margin-top:28px}.button{min-height:50px;padding-inline:19px;font-size:14px}.hero-footnote{margin-top:37px;font-size:11px}.visual{height:330px;border-radius:12px}.visual-top{left:20px;right:20px;top:21px;font-size:10px}.visual-core{inset:75px 30px 58px;gap:8px}.visual-tile{padding:10px;border-radius:7px}.tile-num{font-size:9px}.tile-icon{width:20px;height:20px;border-radius:4px}.tile-icon:before{width:8px;left:5px;top:7px}.tile-icon:after{width:6px;left:5px;top:12px}.tile-label{font-size:13px}.visual-bottom{left:20px;right:20px;bottom:18px;font-size:9px}.care,.spaces,.school,.process{padding-block:78px}.section-title{font-size:31px}.section-sub{font-size:16px;margin-top:17px}.section-heading{margin-bottom:30px}.care-grid{grid-template-columns:1fr;gap:12px}.care-card{min-height:220px;padding:25px}.care-line{margin:19px 0 auto}.care-card h3{font-size:23px;margin:16px 0 10px}.care-card p{font-size:15px}.spaces-layout{gap:25px}.space-picker{margin-top:27px}.space-option{min-height:61px;font-size:16px}.space-detail{min-height:390px;padding:29px}.detail-graphic{height:135px}.space-detail h3{font-size:29px}.space-detail p{font-size:15px}.category-chips{margin:28px 0 20px}.product-grid{grid-template-columns:1fr}.product-card:last-child{display:block}.product-image{height:180px}.school-note{font-size:12px}.process-list{grid-template-columns:1fr;gap:0;margin-top:36px}.process-step{display:grid;grid-template-columns:58px 1fr;align-items:start;padding:17px 0;border-top:1px solid #cbd9e2}.process-step h3{margin:0;font-size:18px}.closing{padding:76px 0}.closing-inner{display:block}.closing h2{font-size:32px}.closing-actions{margin-top:31px}.site-footer{padding:25px 0}.footer-inner{display:block}.footer-inner span{display:block;margin-top:9px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="VENTRY 첫 화면으로">
+        <span class="brand-mark" aria-hidden="true"><img src="ventry-logo-navy.jpeg" alt=""></span>
+        <span class="brand-wordmark" aria-hidden="true"><img src="ventry-logo-navy.jpeg" alt=""></span>
+      </a>
+      <nav class="desktop-nav" aria-label="주 메뉴">
+        <a href="#service">서비스 소개</a><a href="#spaces">설치 위치</a><a href="#care">운영관리</a><a href="#school">상품·성분 안내</a>
+      </nav>
+      <a class="header-cta" href="#contact">설치 상담 문의 ↗</a>
+      <button class="menu-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span></span></button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="#service">서비스 소개</a><a href="#spaces">설치 위치</a><a href="#care">운영관리</a><a href="#school">상품·성분 안내</a><a href="#contact">설치 상담 문의</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" id="service" aria-labelledby="hero-title">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow">B2B VENDING OPERATION</p>
+          <h1 id="hero-title">설치부터 운영관리까지,<br><em>공간에 맞는 자판기 운영</em></h1>
+          <p class="hero-description">학교·기업·피트니스·공공시설에 맞춰 설치하고, 상품 보충부터 위생·재고 관리와 A/S 대응까지 직접 운영합니다.</p>
+          <div class="hero-actions"><a class="button button-primary" href="#contact">설치 상담 문의 <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10h13m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.7"/></svg></a><a class="button button-secondary" href="#school">학교 운영 기준 보기</a></div>
+          <div class="hero-footnote">설치 이후의 운영까지 생각합니다.</div>
+        </div>
+        <div class="visual" role="img" aria-label="설치, 재고, 위생, 대응을 연결한 VENTRY 운영관리 모듈 그래픽">
+          <div class="visual-top"><span>VENTRY / OPERATION SYSTEM</span><span class="signal">ACTIVE</span></div>
+          <div class="visual-core">
+            <div class="visual-tile"><span class="tile-num">01 / PLAN</span><span class="tile-icon"></span><span class="tile-label">설치</span></div>
+            <div class="visual-tile"><span class="tile-num">02 / STOCK</span><span class="tile-icon"></span><span class="tile-label">재고</span></div>
+            <div class="visual-tile"><span class="tile-num">03 / CARE</span><span class="tile-icon"></span><span class="tile-label">위생</span></div>
+            <div class="visual-tile"><span class="tile-num">04 / SUPPORT</span><span class="tile-icon"></span><span class="tile-label">대응</span></div>
+          </div>
+          <div class="visual-bottom"><span>ONE PARTNER / CONTINUOUS CARE</span><span>→</span></div>
+        </div>
+      </div>
+    </section>
+    <section class="care" id="care" aria-labelledby="care-title">
+      <div class="container">
+        <div class="section-heading"><div><p class="eyebrow">VENTRY CARE</p><h2 class="section-title" id="care-title">설치보다 중요한 건,<br>그 이후의 운영입니다.</h2></div><p class="section-sub">자판기를 두는 것에서 끝나지 않습니다. 상품과 기기 상태를 지속적으로 살피며 운영합니다.</p></div>
+        <div class="care-grid">
+          <article class="care-card"><span class="care-index">01 / HYGIENE</span><div class="care-line"></div><h3>정기 위생 케어</h3><p>기기 소독, 유통기한 전수 확인, 주기적인 청소로 관리합니다.</p></article>
+          <article class="care-card"><span class="care-index">02 / INVENTORY</span><div class="care-line"></div><h3>재고·유통 관리</h3><p>실시간 재고 모니터링과 정기 보충으로 품절을 줄입니다.</p></article>
+          <article class="care-card"><span class="care-index">03 / RESPONSE</span><div class="care-line"></div><h3>A/S·장애 대응</h3><p>장애 접수 시 당일 또는 익일 방문 대응을 기본으로 운영합니다.</p></article>
+        </div>
+      </div>
+    </section>
+    <section class="spaces" id="spaces" aria-labelledby="spaces-title">
+      <div class="container spaces-layout">
+        <div class="spaces-left"><p class="eyebrow">PLACES WE SERVE</p><h2 class="section-title" id="spaces-title">공간에 맞춰<br>운영 방식도 달라집니다.</h2><p class="section-sub">이용자와 설치 환경을 먼저 살펴보고, 장소에 맞는 품목과 관리 방식을 구성합니다.</p>
+          <div class="space-picker" role="tablist" aria-label="설치 위치 선택">
+            <button class="space-option" type="button" role="tab" aria-selected="true" data-space="school"><span>학교·교육기관</span><span class="space-count">01 ↗</span></button>
+            <button class="space-option" type="button" role="tab" aria-selected="false" data-space="company"><span>기업·사옥</span><span class="space-count">02 ↗</span></button>
+            <button class="space-option" type="button" role="tab" aria-selected="false" data-space="fitness"><span>피트니스·스포츠</span><span class="space-count">03 ↗</span></button>
+            <button class="space-option" type="button" role="tab" aria-selected="false" data-space="public"><span>공공기관·일반시설</span><span class="space-count">04 ↗</span></button>
+          </div>
+        </div>
+        <article class="space-detail" aria-live="polite"><span class="detail-number" id="space-index">01 / EDUCATION</span><div class="detail-graphic" aria-hidden="true"><i class="graphic-bar"></i><i class="graphic-bar"></i><i class="graphic-bar"></i><i class="graphic-dot"></i><span>SPACE × OPERATION</span></div><h3 id="space-title">학교·교육기관</h3><p id="space-description">학교 환경에 맞는 품목 기준과 투명한 상품 정보를 중심으로 구성합니다.</p></article>
+      </div>
+    </section>
+    <section class="school" id="school" aria-labelledby="school-title">
+      <div class="container"><div class="school-intro"><p class="eyebrow">FOR SCHOOLS</p><h2 class="section-title" id="school-title">학교에서 필요한<br>상품 정보를 한눈에</h2><p class="section-sub">판매 품목과 가격, 원재료·영양정보를 확인하기 쉬운 구조로 제공합니다.</p></div>
+        <div class="category-chips" aria-label="상품 유형 미리보기"><button class="chip" type="button" aria-pressed="true" data-category="drink">제로 음료</button><button class="chip" type="button" aria-pressed="false" data-category="snack">제로 간식</button></div>
+        <div class="product-grid" id="product-grid">
+          <article class="product-card"><div class="product-image">상품 이미지 영역</div><div class="product-info"><span class="product-category">ZERO DRINK / PREVIEW</span><h3>상품명 입력 예정</h3><dl class="product-fields"><div><dt>판매가</dt><dd>자료 확인 후 반영</dd></div><div><dt>원재료</dt><dd>자료 확인 후 반영</dd></div><div><dt>영양성분</dt><dd>자료 확인 후 반영</dd></div></dl><button class="product-more" type="button" disabled>상세 정보 · 자료 반영 예정</button></div></article>
+          <article class="product-card"><div class="product-image">상품 이미지 영역</div><div class="product-info"><span class="product-category">ZERO DRINK / PREVIEW</span><h3>상품명 입력 예정</h3><dl class="product-fields"><div><dt>판매가</dt><dd>자료 확인 후 반영</dd></div><div><dt>원재료</dt><dd>자료 확인 후 반영</dd></div><div><dt>영양성분</dt><dd>자료 확인 후 반영</dd></div></dl><button class="product-more" type="button" disabled>상세 정보 · 자료 반영 예정</button></div></article>
+          <article class="product-card"><div class="product-image">상품 이미지 영역</div><div class="product-info"><span class="product-category">ZERO DRINK / PREVIEW</span><h3>상품명 입력 예정</h3><dl class="product-fields"><div><dt>판매가</dt><dd>자료 확인 후 반영</dd></div><div><dt>원재료</dt><dd>자료 확인 후 반영</dd></div><div><dt>영양성분</dt><dd>자료 확인 후 반영</dd></div></dl><button class="product-more" type="button" disabled>상세 정보 · 자료 반영 예정</button></div></article>
+        </div><p class="school-note">※ 상품 이미지와 세부 정보는 고객 제공 자료 확인 후 반영됩니다. 현재 화면은 정보 구성 확인용 시안입니다.</p>
+      </div>
+    </section>
+    <section class="process" id="process" aria-labelledby="process-title"><div class="container"><p class="eyebrow">HOW WE WORK</p><h2 class="section-title" id="process-title">상담부터 정기 관리까지<br>한 흐름으로</h2><div class="process-list"><div class="process-step"><span>01 / CONSULT</span><h3>상담 및<br>설치 환경 확인</h3></div><div class="process-step"><span>02 / PLAN</span><h3>기기·품목<br>구성 협의</h3></div><div class="process-step"><span>03 / SETUP</span><h3>설치 및<br>초기 세팅</h3></div><div class="process-step"><span>04 / CARE</span><h3>정기<br>운영관리</h3></div></div></div></section>
+    <section class="closing" id="contact" aria-labelledby="closing-title"><div class="container closing-inner"><div><p class="eyebrow light">START WITH VENTRY</p><h2 id="closing-title">설치 환경에 맞는 운영 방식을<br>상담해보세요.</h2></div><div class="closing-actions"><span class="button button-light" aria-label="설치 상담 문의, 상담 채널 확정 후 연결 예정">설치 상담 문의 ↗</span><span class="closing-note">상담 채널 확정 후 연결 예정</span></div></div></section>
+  </main>
+  <footer class="site-footer"><div class="container footer-inner"><strong>VENTRY</strong><span>© VENTRY · 1차 디자인 시안 / 확정 전 정보는 반영하지 않았습니다.</span></div></footer>
+  <script>
+    const toggle=document.querySelector('.menu-toggle');
+    const mobileNav=document.querySelector('.mobile-nav');
+    toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'메뉴 닫기':'메뉴 열기');mobileNav.classList.toggle('open',open)});
+    mobileNav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','메뉴 열기');mobileNav.classList.remove('open')}));
+    const spaces={school:{index:'01 / EDUCATION',title:'학교·교육기관',description:'학교 환경에 맞는 품목 기준과 투명한 상품 정보를 중심으로 구성합니다.'},company:{index:'02 / WORKPLACE',title:'기업·사옥',description:'임직원이 편리하게 이용할 수 있는 음료·스낵 운영 환경을 구성합니다.'},fitness:{index:'03 / FITNESS',title:'피트니스·스포츠',description:'제로 음료와 건강 간식 중심으로 이용 환경에 맞춰 구성합니다.'},public:{index:'04 / PUBLIC',title:'공공기관·일반시설',description:'이용자 동선과 운영 환경을 고려해 안정적으로 관리합니다.'}};
+    document.querySelectorAll('.space-option').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.space-option').forEach(item=>item.setAttribute('aria-selected','false'));tab.setAttribute('aria-selected','true');const data=spaces[tab.dataset.space];document.querySelector('#space-index').textContent=data.index;document.querySelector('#space-title').textContent=data.title;document.querySelector('#space-description').textContent=data.description}));
+    document.querySelectorAll('.chip').forEach(chip=>chip.addEventListener('click',()=>{document.querySelectorAll('.chip').forEach(item=>item.setAttribute('aria-pressed','false'));chip.setAttribute('aria-pressed','true');const label=chip.dataset.category==='drink'?'ZERO DRINK / PREVIEW':'ZERO SNACK / PREVIEW';document.querySelectorAll('.product-category').forEach(item=>item.textContent=label)}));
+  </script>
+</body>
+</html>
